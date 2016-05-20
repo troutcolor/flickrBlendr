@@ -1,4 +1,4 @@
-.flickrblendrfeed{text-align:center;background-color: #000;color:#E6E6E6;font-size:48px;padding:0px;margin:0px;}
+.flickrblendrfeed{text-align:center;background-color: #000;color:#E6E6E6;padding:0px;margin:0px;}
 
 
 
@@ -23,3 +23,5 @@ a:hover{text-decoration:underline;}
 
 #controlwrap{width:100%;height:50px;}
 #info {float:right;width:50px;}
+
+#mode{font-size:13px;}

@@ -91,12 +91,12 @@ var showCredits = function() {
 	owner1 = photosObj[currentPhotos[0]].ownername;
 	owner2 = photosObj[currentPhotos[1]].ownername;
 
-	var photolink1 = "<a target='new' href='https://flickr.com/photos/" + owner1Id + "/" + photo1Id + "'>view on flickr</a>";
-	var photolink2 = "<a target='new' href='https://flickr.com/photos/" + owner2Id + "/" + photo2Id + "'>view on flickr</a>";
+	var photolink1 = "<a target='new' href='https://flickr.com/photos/" + owner1Id + "/" + photo1Id + "'>Flickr Photo: </a>";
+	var photolink2 = "<a target='new' href='https://flickr.com/photos/" + owner2Id + "/" + photo2Id + "'>Flickr Photo: </a>";
 
 	var credits1 = "Photo by: " + owner1 + " : " + get_license_text( license1 );
 	var credits2 = "Photo by " + owner2 + " : " + get_license_text( license2 );
-	document.getElementById( 'licenses' ).innerHTML = credits1 + " " + photolink1 + "<br>" + credits2 + " " + photolink2;
+	document.getElementById( 'licenses' ).innerHTML = photolink1 + credits1 + " " +  "<br>" + photolink2 + " " + credits2;
 
 
 }
