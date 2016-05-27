@@ -29,8 +29,16 @@ function flickrblendr_shortcode_routine( $args ) {
 	wp_enqueue_style ( 'flickrblendr' );
 	
 	?>
-	<div id="controlwrap"><div id="info">i</div><div id="controls"><p class="info">Just grabbing some random flickr photos and blending them using a CSS background image blend, here is a <a href="index_c.html">canvas version</a>.</p>
-	Blend Mode: <select name="mode" id="mode" onchange="swapmode();return true;" size="0">
+	<div id="flickrblendrholder">
+	<div class="flickrblendr">
+	<div id="controlwrap">
+		<div id="info">i</div>
+		<div id="controls">
+			<div id="expand" onclick="fullscreen();">
+				<img src='<?php echo FLICKRBLENDR_URL; ?>assets/fullscreen.png'></div>
+		<?php
+		if (get_option( 'flickrblendr_showmode' )){?> 
+		<p>Blend Mode: <select name="mode" id="mode" onchange="swapmode();return true;" size="0">
 	<option value="multiply" >multiply</option>
 	<option value="screen">screen</option>
 	<option value="overlay">overlay</option>
@@ -46,10 +54,16 @@ function flickrblendr_shortcode_routine( $args ) {
 	<option value="saturation">saturation</option>
 	<option value="color">color</option>
 	<option value="luminosity">luminosity</option>
-	</select> </div></div>
+	</select></p>
+	<?php
+}
+	?>
+
+ </div></div>
 	<?php
 	// return the result
-	return $return;
+	return $return."</div></div>";
+	?><?php 
 }
 
 //add_shortcode('flickrblendr', 'flickrblendr_shortcode_routine');
@@ -79,6 +93,7 @@ add_action( 'admin_init', 'flickrblendr_plugin_settings' );
 
 function flickrblendr_plugin_settings() {
 	register_setting( 'flickrblendr-settings-group', 'flickrblendr_apikey' );
+	register_setting( 'flickrblendr-settings-group', 'flickrblendr_showmode' );
 	 
 }
 
@@ -106,6 +121,9 @@ function flickrblendr_plugin_options() {
 	<th scope="row">Flickr API Key</th>
 	<td><input type="text" name="flickrblendr_apikey" value="<?php echo esc_attr( get_option('flickrblendr_apikey') ); ?>" /></td>
 	</tr>
+	<tr>
+		<td>Show mode popup: <input name="flickrblendr_showmode" type="checkbox" value="1" <?php checked( '1', get_option( 'flickrblendr_showmode' ) ); ?> />
+
 	 
 	</table> 
 

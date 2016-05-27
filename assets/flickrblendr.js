@@ -3,18 +3,18 @@
 var imagesloaded = 0;
 var image1 = new Image();
 var image2 = new Image();
-var currentPhotos=new Array();
+var currentPhotos = new Array();
 image1.onload = function() {
 	imagesloaded++;
 	if (imagesloaded == 2) {
-		combo( image1, image2 );
+		combo(image1, image2);
 		imagesloaded = 0;
 	}
 };
 image2.onload = function() {
 	imagesloaded++;
 	if (imagesloaded == 2) {
-		combo( image1, image2 );
+		combo(image1, image2);
 		imagesloaded = 0;
 	}
 };
@@ -22,7 +22,7 @@ image2.onload = function() {
 
 //what to do when the json arrives from flickr api
 //store in global photosObj
-var jsonFlickrApi = function( thejson ) {
+var jsonFlickrApi = function(thejson) {
 	photosObj = thejson.photos.photo;
 	randomBlend();
 
@@ -47,41 +47,30 @@ var myRandomImageNumber = function() {
 var randomBlend = function() {
 	imagesloaded = 0;
 	var maxPhotos = photosObj.length;
-	
-	currentPhotos[0]=myRandomImageNumber();
-	currentPhotos[1]=myRandomImageNumber();
-	
+
+	currentPhotos[0] = myRandomImageNumber();
+	currentPhotos[1] = myRandomImageNumber();
+
 	image1.src = photosObj[currentPhotos[0]].url_c;
 	image2.src = photosObj[currentPhotos[1]].url_c;;
-	
-	 
-	jQuery('#pic').height(jQuery('#pic').width()*75/100);
-	
-	
- }
+
+
+	jQuery('#pic').height(jQuery('#pic').width() * 75 / 100);
+
+
+}
 
 var combo = function(img1, img2) {
-/*
-	document.body.appendChild(document.getElementById('pic'));
-    jQuery('#pic').css({
-               position: 'absolute',
-               width: jQuery(window).width(),
-               height: jQuery(window).height(),
-   			top:'0',
-   			left:'0'
-
-           });*/
-
-		   
-	document.getElementById( 'flickrblenderloader' ).style.display="none";
-	document.getElementById( 'pic' ).style.background = "url(" + img1.src + "),url(" + img2.src + ")";
-	document.getElementById( 'pic' ).style.backgroundSize = 'cover';
+	
+	document.getElementById('flickrblenderloader').style.display = "none";
+	document.getElementById('pic').style.background = "url(" + img1.src + "),url(" + img2.src + ")";
+	document.getElementById('pic').style.backgroundSize = 'cover';
 	showCredits();
 	setTimeout(randomBlend, 10000)
 }
 
 var showCredits = function() {
-	
+
 	license1 = photosObj[currentPhotos[0]].license;
 	license2 = photosObj[currentPhotos[1]].license;
 	owner1Id = photosObj[currentPhotos[0]].owner;
@@ -94,23 +83,23 @@ var showCredits = function() {
 	var photolink1 = "<a target='new' href='https://flickr.com/photos/" + owner1Id + "/" + photo1Id + "'>Flickr Photo: </a>";
 	var photolink2 = "<a target='new' href='https://flickr.com/photos/" + owner2Id + "/" + photo2Id + "'>Flickr Photo: </a>";
 
-	var credits1 = "Photo by: " + owner1 + " : " + get_license_text( license1 );
-	var credits2 = "Photo by " + owner2 + " : " + get_license_text( license2 );
-	document.getElementById( 'licenses' ).innerHTML = photolink1 + credits1 + " " +  "<br>" + photolink2 + " " + credits2;
+	var credits1 = "Photo by: " + owner1 + " : " + get_license_text(license1);
+	var credits2 = "Photo by " + owner2 + " : " + get_license_text(license2);
+	document.getElementById('licenses').innerHTML = photolink1 + credits1 + " " + "<br>" + photolink2 + " " + credits2;
 
 
 }
 
 var swapmode = function() {
-	var e = document.getElementById( "mode" );
+	var e = document.getElementById("mode");
 	var mode = e.options[e.selectedIndex].value;
-	document.getElementById( 'pic' ).style.backgroundBlendMode = mode;
+	document.getElementById('pic').style.backgroundBlendMode = mode;
 }
 
-document.getElementById( 'controlwrap' ).onmouseover = function() {
+document.getElementById('controlwrap').onmouseover = function() {
 	show('controls')
 };
-document.getElementById( 'controlwrap' ).onmouseout = function() {
+document.getElementById('controlwrap').onmouseout = function() {
 	hide('controls')
 };
 
@@ -133,6 +122,30 @@ function hide(id) {
 	document.getElementById(id).style.visibility = "hidden";
 }
 
+
+function fullscreen() {
+	if (jQuery('.flickrblendr').width() !== jQuery(window).width()) {
+		jQuery('.flickrblendr').appendTo("body");
+		jQuery('.flickrblendr').css({
+			position: 'absolute',
+			width: jQuery(window).width(),
+			height: jQuery(window).height(),
+			top: '0',
+			left: '0'
+
+		});
+
+	} else {
+		jQuery('.flickrblendr').prependTo("#flickrblendrholder");
+		jQuery('.flickrblendr').css({
+			position: 'relative',
+			maxWidth: '100%',
+			height: "auto",
+		});
+
+	}
+}
+
 /*
   	licenses stuff from @cogdog
   */
@@ -147,6 +160,6 @@ function get_license_text(thelicense) {
 			return 'as s United States Government Work ( PD )';
 			break;
 		default:
-			return 'under a Creative Commons (' + licenses[thelicense] + ') license';
+			return 'under a CC (' + licenses[thelicense] + ') license';
 	}
 }

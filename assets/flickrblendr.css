@@ -1,18 +1,19 @@
-.flickrblendrfeed{text-align:center;background-color: #000;color:#E6E6E6;padding:0px;margin:0px;}
+.flickrblendr,.flickrblendrfeed{text-align:center;background-color: #000;color:#E6E6E6;padding:0px;margin:0px;}
 
 
 
 .info{font: normal normal normal 14px Arial, sans-serif;}
-a,a:visited{color:yellow;text-decoration:none;}
-a:hover{text-decoration:underline;}
+#flickrblendrholder a, #flickrblendrholder a:visited{color:yellow;text-decoration:none;}
+#flickrblendrholder a:hover{text-decoration:underline;}
 
   #mode{margin:0px;}	
 
 #pic {
-	
+	width:100%;height:auto;
+	max-width:800px;max-height:600px;
 	 background-blend-mode: exclusion;
 	 background-position: center;
-	 width:100%;height:auto;
+	 
 	 margin:auto;
 	 background-size:cover;
 }
@@ -25,3 +26,6 @@ a:hover{text-decoration:underline;}
 #info {float:right;width:50px;}
 
 #mode{font-size:13px;}
+#expand{float:left;width:32px;height:32px;}
+ 
+#flickrblendrholder{border:dotted 5px red;}
