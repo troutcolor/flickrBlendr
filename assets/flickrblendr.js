@@ -124,9 +124,9 @@ function hide(id) {
 
 
 function fullscreen() {
-	if (jQuery('.flickrblendr').width() !== jQuery(window).width()) {
-		jQuery('.flickrblendr').appendTo("body");
-		jQuery('.flickrblendr').css({
+	if (jQuery('#flickrblendr').width() !== jQuery(window).width()) {
+		jQuery('#flickrblendr').appendTo("body");
+		jQuery('#flickrblendr').css({
 			position: 'absolute',
 			width: jQuery(window).width(),
 			height: jQuery(window).height(),
@@ -134,13 +134,24 @@ function fullscreen() {
 			left: '0'
 
 		});
+		jQuery('#pic').css({
+ 			width: "800px",
+			height: "600px",
+			margin:"auto"
 
+		});
+window.scrollTo(0, 0);
 	} else {
-		jQuery('.flickrblendr').prependTo("#flickrblendrholder");
-		jQuery('.flickrblendr').css({
+		jQuery('#flickrblendr').prependTo("#flickrblendrholder");
+		jQuery('#flickrblendr').css({
 			position: 'relative',
 			maxWidth: '100%',
 			height: "auto",
+		});
+		jQuery('#pic').css({
+ 			maxWidth: "100%"
+			
+ 
 		});
 
 	}
