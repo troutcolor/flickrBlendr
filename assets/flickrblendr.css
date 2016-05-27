@@ -3,8 +3,8 @@
 
 
 .info{font: normal normal normal 14px Arial, sans-serif;}
-#flickrblendrholder a, #flickrblendrholder a:visited{color:yellow;text-decoration:none;}
-#flickrblendrholder a:hover{text-decoration:underline;}
+#licenses a, #flickrblendrholder a:visited{color:yellow;text-decoration:none;}
+#licenses a:hover{text-decoration:underline;}
 
   #mode{margin:0px;}	
 

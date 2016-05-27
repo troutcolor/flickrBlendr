@@ -10,9 +10,6 @@
 */
 define( 'FLICKRBLENDR_URL', \plugin_dir_url( __FILE__ ) );
 
-
-
-
  
 function add_flickrblendr_scripts_basic(){
 // wp_register_script Registers a script file in WordPress to be linked to a page later using the wp_enqueue_script() function, which safely handles the script dependencies.
@@ -48,20 +45,21 @@ function flickrblendr_plugin_options() {
 	?>
 	<div class="wrap">
 	<h2>FlickrBlendr Settings</h2>
- <p>You can create/find your api key at <a href="https://www.flickr.com/services/api/keys/">Flickr API Keys</a>. You will need to sign in.</p>	 
+	<p>You can create/find your api key at <a href="https://www.flickr.com/services/api/keys/">Flickr API Keys</a>. You will need to sign in.</p>	 
  	<form method="post" action="options.php">
 	<?php settings_fields( 'flickrblendr-settings-group' ); ?>
 	<?php do_settings_sections( 'flickrblendr-settings-group' ); ?>
-	<table class="form-table">
-	
+	<table class="form-table">	
 	<tr valign="top">
 	<th scope="row">Flickr API Key</th>
-	<td><input type="text" name="flickrblendr_apikey" value="<?php echo esc_attr( get_option('flickrblendr_apikey') ); ?>" /></td>
+	<td>
+<input type="text" name="flickrblendr_apikey" value="<?php echo esc_attr( get_option('flickrblendr_apikey') ); ?>" />
+</td>
 	</tr>
 	<tr>
-		<td>Use mode popup: <input name="flickrblendr_showmode" type="checkbox" value="1" <?php checked( '1', get_option( 'flickrblendr_showmode' ) ); ?> />
-<em>This dosen't work yet, the popup is always there.</em>
-	 </td></tr>
+	<td>Use mode popup: <input name="flickrblendr_showmode" type="checkbox" value="1" <?php checked( '1', get_option( 'flickrblendr_showmode' ) ); ?> />
+	<em>This dosen't work yet, the popup is always there.</em>
+	</td></tr>
 	</table> 
 
 	<?php submit_button(); ?>
@@ -113,38 +111,29 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 	add_filter( 'the_content', 'flickrblendr_before_content' ); 
  
 	 function flickrblendr_before_content( $content ) { 
-	    if ( is_singular('flickrblendr') ) {
-	        $flickrblender= flickrblender_content();
-			 
-			
-	        $content = $flickrblender . $content;
-		
+		 if ( is_singular('flickrblendr') ) {
+			$flickrblender= flickrblender_content();
+			$content = $flickrblender . $content;
 			}
-
-	    return $content;
+			return $content;
 	}
 	
-	function flickrblendrpage_enqueue_scripts() {
-
-		 
-	 
-			if ( is_singular('flickrblendr') ) {
-				//enqueue here so only add script & styles when needed
-				//echo esc_attr( get_option('flickrblendr_apikey') )
-				$flickrapikey=get_option('flickrblendr_apikey');
+function flickrblendrpage_enqueue_scripts() {
+	if ( is_singular('flickrblendr') ) {
+		//enqueue here so only add script & styles when needed
+		//echo esc_attr( get_option('flickrblendr_apikey') )
+		$flickrapikey=get_option('flickrblendr_apikey');
 	
-				$flickrfeed="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=".$flickrapikey."&license=7%2C8%2C2%2C4%2C5&sort=interestingness-desc&extras=url_c%2Clicense%2Cowner_name&per_page=500&format=json";
+		$flickrfeed="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=".$flickrapikey."&license=7%2C8%2C2%2C4%2C5&sort=interestingness-desc&extras=url_c%2Clicense%2Cowner_name&per_page=500&format=json";
 	
-				wp_enqueue_script( 'flickrblendr');		
-				wp_enqueue_script( 'flickrfeed', $flickrfeed, array( 'json2','jquery','flickrblendr' ),false,true );
-				wp_enqueue_style ( 'flickrblendr' );	
-				
+		wp_enqueue_script( 'flickrblendr');		
+		wp_enqueue_script( 'flickrfeed', $flickrfeed, array( 'json2','jquery','flickrblendr' ),false,true );
+		wp_enqueue_style ( 'flickrblendr' );	
+			
 		}
-
- 
 }
 	
-	add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
 	
 	function flickrblender_content(){
 		$flickrblendrsearch="calm";
@@ -176,7 +165,18 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 		</div></div>';
 		return $r;
 	}
-	
+
+	function flickrblendr_activate() {
+	    // register taxonomies/post types here
+	    flush_rewrite_rules();
+	}
+
+	register_activation_hook( __FILE__, 'flickrblendr_activate' );
+
+	function flickrblendr_deactivate() {
+	    flush_rewrite_rules();
+	}
+	register_deactivation_hook( __FILE__, 'flickrblendr_deactivate' );
 	
 	
 ?>

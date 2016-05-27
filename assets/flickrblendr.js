@@ -122,7 +122,7 @@ function hide(id) {
 	document.getElementById(id).style.visibility = "hidden";
 }
 
-
+//this togs the fullscreen
 function fullscreen() {
 	if (jQuery('#flickrblendr').width() !== jQuery(window).width()) {
 		jQuery('#flickrblendr').appendTo("body");
