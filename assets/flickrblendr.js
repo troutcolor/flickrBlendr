@@ -127,7 +127,7 @@ function fullscreen() {
 	if (jQuery('#flickrblendr').width() !== jQuery(window).width()) {
 		jQuery('#flickrblendr').appendTo("body");
 		jQuery('#flickrblendr').css({
-			position: 'absolute',
+			position: 'fixed',
 			width: jQuery(window).width(),
 			height: jQuery(window).height(),
 			top: '0',

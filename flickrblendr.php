@@ -48,7 +48,7 @@ function flickrblendr_plugin_options() {
 	?>
 	<div class="wrap">
 	<h2>FlickrBlendr Settings</h2>
- <p>You can find your api key at ..../</p>	 
+ <p>You can create/find your api key at <a href="https://www.flickr.com/services/api/keys/">Flickr API Keys</a>. You will need to sign in.</p>	 
  	<form method="post" action="options.php">
 	<?php settings_fields( 'flickrblendr-settings-group' ); ?>
 	<?php do_settings_sections( 'flickrblendr-settings-group' ); ?>
@@ -59,9 +59,9 @@ function flickrblendr_plugin_options() {
 	<td><input type="text" name="flickrblendr_apikey" value="<?php echo esc_attr( get_option('flickrblendr_apikey') ); ?>" /></td>
 	</tr>
 	<tr>
-		<td>Show mode popup: <input name="flickrblendr_showmode" type="checkbox" value="1" <?php checked( '1', get_option( 'flickrblendr_showmode' ) ); ?> />
-
-	 
+		<td>Use mode popup: <input name="flickrblendr_showmode" type="checkbox" value="1" <?php checked( '1', get_option( 'flickrblendr_showmode' ) ); ?> />
+<em>This dosen't work yet, the popup is always there.</em>
+	 </td></tr>
 	</table> 
 
 	<?php submit_button(); ?>
@@ -148,8 +148,7 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 	
 	function flickrblender_content(){
 		$flickrblendrsearch="calm";
-		$r= 
-		"<div id='pic' data-flickrblendr='".$flickrblendrsearch."' class='flickrblendrfeed'  ><p id='licenses' class='info'></p><img src='".FLICKRBLENDR_URL."assets/Ajax-loader.gif' id='flickrblenderloader'></div>";
+		 
 		
 		$r='<div id="flickrblendrholder">
 	<div id="flickrblendr"><div id="controlwrap"><div id="info">i</div><div id="controls">
@@ -173,7 +172,7 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 				<option value="luminosity">luminosity</option>		
 			</select>    </div></div>
 
-		<div id="pic" data-flickrblendr="'.$flickrblendrsearch.'" class="flickrblendrfeed"  ><p id="licenses" class="info"></p><img src="'.FLICKRBLENDR_URL.'"assets/Ajax-loader.gif" id="flickrblenderloader""></div>
+		<div id="pic" data-flickrblendr="'.$flickrblendrsearch.'" class="flickrblendrfeed"  ><p id="licenses" class="info"></p><img src="'.FLICKRBLENDR_URL.'assets/Ajax-loader.gif" id="flickrblenderloader""></div>
 		</div></div>';
 		return $r;
 	}
