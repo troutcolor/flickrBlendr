@@ -136,3 +136,108 @@ function flickrblendr_plugin_options() {
 }
 add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 ?>
+
+<?php
+	
+	/*
+		Custom post type
+	*/
+	
+	function my_custom_post_flickrblender() {
+		$labels = array(
+			'name'               => _x( 'FlickrBlendr', 'post type general name' ),
+			'singular_name'      => _x( 'FlickrBlendr', 'post type singular name' ),
+			'add_new'            => _x( 'Add New', 'FlickrBlendr' ),
+			'add_new_item'       => __( 'Add New FlickrBlendr' ),
+			'edit_item'          => __( 'Edit FlickrBlendr' ),
+			'new_item'           => __( 'New FlickrBlendr' ),
+			'all_items'          => __( 'All FlickrBlendrs' ),
+			'view_item'          => __( 'View FlickrBlendr' ),
+			'search_items'       => __( 'Search FlickrBlendr' ),
+			'not_found'          => __( 'No FlickrBlendrs found' ),
+			'not_found_in_trash' => __( 'No FlickrBlendrs found in the Trash' ), 
+			'parent_item_colon'  => '',
+			'menu_name'          => 'FlickrBlendrs'
+		);
+		$args = array(
+			'labels'        => $labels,
+			'description'   => 'Holds FlickrBlendrs and show specific data',
+			'public'        => true,
+			'menu_position' => 5,
+			'hierarchical'	=> true,
+			'supports'      => array( 'title', 'editor', 'thumbnail','custom-fields' ),
+			'has_archive'   => false,
+		);
+		register_post_type( 'flickrblendr', $args );	
+	}
+	add_action( 'init', 'my_custom_post_flickrblender' );
+	
+	
+	add_filter( 'the_content', 'flickrblendr_before_content' ); 
+ 
+	 function flickrblendr_before_content( $content ) { 
+	    if ( is_singular('flickrblendr') ) {
+	        $flickrblender= flickrblender_content();
+			 
+			
+	        $content = $flickrblender . $content;
+		
+			}
+
+	    return $content;
+	}
+	
+	function flickrblendrpage_enqueue_scripts() {
+
+		 
+	 
+			if ( is_singular('flickrblendr') ) {
+				//enqueue here so only add script & styles when needed
+				//echo esc_attr( get_option('flickrblendr_apikey') )
+				$flickrapikey=get_option('flickrblendr_apikey');
+	
+				$flickrfeed="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=".$flickrapikey."&license=7%2C8%2C2%2C4%2C5&sort=interestingness-desc&extras=url_c%2Clicense%2Cowner_name&per_page=500&format=json";
+	
+				wp_enqueue_script( 'flickrblendr');		
+				wp_enqueue_script( 'flickrfeed', $flickrfeed, array( 'json2','jquery','flickrblendr' ),false,true );
+				wp_enqueue_style ( 'flickrblendr' );	
+				
+		}
+
+ 
+}
+	
+	add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
+	
+	function flickrblender_content(){
+		
+		
+		$r='<div id="flickrblendrholder">
+	<div class="flickrblendr"><div id="controlwrap"><div id="info">i</div><div id="controls"><p class="info">Just grabbing some random flickr photos and blending them using a CSS background image blend, here is a <a href="index_c.html">canvas version</a>.</p>
+			Blend Mode: <select name="mode" id="mode"  onchange="swapmode();return true;" size="1">
+				<option value="multiply" >multiply</option>
+				<option value="screen">screen</option>
+				<option value="overlay">overlay</option>
+				<option value="darken">darken</option>
+				<option value="lighten">lighten</option>
+				<option value="color-dodge">color-dodge</option>
+				<option value="color-burn">color-burn</option>
+				<option value="hard-light">hard-light</option>
+				<option value="soft-light">soft-light</option>
+				<option value="difference">difference</option>
+				<option value="exclusion" selected>exclusion</option>
+				<option value="hue">hue</option>
+				<option value="saturation">saturation</option>
+				<option value="color">color</option>
+				<option value="luminosity">luminosity</option>		
+			</select>    </div></div>
+
+		<div id="pic">
+			<p id="licenses" class="info"></p>
+		</div></div></div>';
+		return $r;
+	}
+	
+	
+	
+?>
