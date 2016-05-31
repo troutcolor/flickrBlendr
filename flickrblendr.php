@@ -2,14 +2,13 @@
 /*
 * Plugin Name: flickrblendr
 * Description: custom post a flickr slideshow two photos at a time blended
-* Version: 0.1
+* Version: 0.1.1
 * Author: John Johnston
 * Author URI: http://johnjohnston.info
 * License:     GPL2
 * License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
-define( 'FLICKRBLENDR_URL', \plugin_dir_url( __FILE__ ) );
-
+ 
  
 function add_flickrblendr_scripts_basic(){
 // wp_register_script Registers a script file in WordPress to be linked to a page later using the wp_enqueue_script() function, which safely handles the script dependencies.
@@ -70,9 +69,7 @@ function flickrblendr_plugin_options() {
 	echo '</div>';
 }
 add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
-?>
-
-<?php
+ 
 	
 	/*
 		Custom post type
@@ -137,12 +134,13 @@ add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
 	
 	function flickrblender_content(){
 		$flickrblendrsearch="calm";
-		 
+		 $flickrblendrurl=plugin_dir_url( __FILE__ ) ;
 		
 		$r='<div id="flickrblendrholder">
 	<div id="flickrblendr"><div id="controlwrap"><div id="info">i</div><div id="controls">
 		<div id="expand" onclick="fullscreen();">
-			<img src="'.FLICKRBLENDR_URL.'assets/fullscreen.png"></div>
+		
+			<img src="'.$flickrblendrurl.'assets/fullscreen.png"></div>
 			Blend Mode: <select name="mode" id="mode"  onchange="swapmode();return true;" size="1">
 				<option value="multiply" >multiply</option>
 				<option value="screen">screen</option>
@@ -161,7 +159,7 @@ add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
 				<option value="luminosity">luminosity</option>		
 			</select>    </div></div>
 
-		<div id="pic" data-flickrblendr="'.$flickrblendrsearch.'" class="flickrblendrfeed"  ><p id="licenses" class="info"></p><img src="'.FLICKRBLENDR_URL.'assets/Ajax-loader.gif" id="flickrblenderloader""></div>
+		<div id="pic" data-flickrblendr="'.$flickrblendrsearch.'" class="flickrblendrfeed"  ><p id="licenses" class="info"></p><img src="'.$flickrblendrurl.'assets/Ajax-loader.gif" id="flickrblenderloader""></div>
 		</div></div>';
 		return $r;
 	}
