@@ -75,7 +75,7 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 		Custom post type
 	*/
 	
-	function my_custom_post_flickrblender() {
+	function my_custom_post_flickrblendr() {
 		$labels = array(
 			'name'               => _x( 'FlickrBlendr', 'post type general name' ),
 			'singular_name'      => _x( 'FlickrBlendr', 'post type singular name' ),
@@ -102,15 +102,16 @@ add_action( 'admin_menu', 'flickrblendr_plugin_menu' );
 		);
 		register_post_type( 'flickrblendr', $args );	
 	}
-	add_action( 'init', 'my_custom_post_flickrblender' );
+	
+	add_action( 'init', 'my_custom_post_flickrblendr' );
 	
 	
 	add_filter( 'the_content', 'flickrblendr_before_content' ); 
  
 	 function flickrblendr_before_content( $content ) { 
 		 if ( is_singular('flickrblendr') ) {
-			$flickrblender= flickrblender_content();
-			$content = $flickrblender . $content;
+			$flickrblendr= flickrblendr_content();
+			$content = $flickrblendr . $content;
 			}
 			return $content;
 	}
@@ -132,7 +133,7 @@ function flickrblendrpage_enqueue_scripts() {
 	
 add_action( 'wp_enqueue_scripts', 'flickrblendrpage_enqueue_scripts' );
 	
-	function flickrblender_content(){
+	function flickrblendr_content(){
 		$flickrblendrsearch="calm";
 		 $flickrblendrurl=plugin_dir_url( __FILE__ ) ;
 		
