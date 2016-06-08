@@ -124,6 +124,7 @@ function hide(id) {
 
 //this togs the fullscreen
 function fullscreen() {
+	var maxindex=max_zindex();
 	if (jQuery('#flickrblendr').width() !== jQuery(window).width()) {
 		jQuery('#flickrblendr').appendTo("body");
 		jQuery('#flickrblendr').css({
@@ -131,7 +132,8 @@ function fullscreen() {
 			width: jQuery(window).width(),
 			height: jQuery(window).height(),
 			top: '0',
-			left: '0'
+			left: '0',
+			zIndex: maxindex
 
 		});
 		jQuery('#pic').css({
@@ -173,4 +175,18 @@ function get_license_text(thelicense) {
 		default:
 			return 'under a CC (' + licenses[thelicense] + ') license';
 	}
+}
+
+ function max_zindex(){
+	
+	var index_highest = 0;
+	// more effective to have a class for the div you want to search
+	jQuery('*').each(function() {
+	    // always use a radix when using parseInt
+	    var index_current = parseInt(jQuery(this).css("zIndex"), 10);
+	    if (index_current > index_highest) {
+	        index_highest = index_current;
+	    }
+	});
+	return index_highest+1;
 }
